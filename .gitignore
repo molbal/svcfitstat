@@ -124,3 +124,10 @@ fabric.properties
 .idea/**/markdown-navigator/
 
 # End of https://www.gitignore.io/api/laravel,phpstorm
+.idea/deployment.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/php.xml
+.idea/svcfitstat.iml
+.idea/vcs.xml
