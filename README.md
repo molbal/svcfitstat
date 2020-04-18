@@ -14,8 +14,10 @@ The service exposes a REST webservice that is - for now - used internally
 </p>
 
 ##Components 
+
 ...
-[image](https://github.com/molbal/svcfitstat-worker)
+
+[docker image](https://github.com/molbal/svcfitstat-worker)
 
 
 # Endpoints
