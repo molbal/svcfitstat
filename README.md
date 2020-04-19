@@ -16,7 +16,7 @@ The service exposes a REST webservice that is - for now - used internally.
 The service consists of an exposed API and its components (this project), and a modified Pyfa running in a docker container.
 
 ## API Service (this project)
-This service was built with Laravel and has a 
+This service was built with Laravel and handles communication, credentials check, and caching.
 
 ## Docker container
 <img src="https://img.icons8.com/dusk/64/000000/docker.png"/>
@@ -28,6 +28,8 @@ The worker that actually runs the Pyfa is in a container due to its numerous dep
 
 A fork of Pyfa was modified to accept a fit as a command line parameter and print its parameters. [Pyfa fork](https://github.com/molbal/Pyfa)
  
+## AWS Simple Queue Service
+We have two queues, one for the sync jobs, with priority, and one for the async jobs, with lower priority.
 
 # Endpoints
 All endpoints are secured by tokens and we only support HTTPS.
