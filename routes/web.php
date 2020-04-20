@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware('auth:api')->get("/test", function (\Illuminate\Http\Request $request) {
+    echo "yo";
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
