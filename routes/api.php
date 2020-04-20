@@ -14,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/calculate/async', 'CalculateController@handleAsync');
+Route::post('/calculate/sync', 'CalculateController@handleSync');

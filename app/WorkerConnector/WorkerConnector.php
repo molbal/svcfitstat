@@ -14,13 +14,14 @@
             $url = env("SFS_WORKER_URL");
             $timeout = env("SFS_WORKER_TIMEOUT", 20);
 	        try {
-                $response = Http::timeout($timeout)->post($url, ["fit" => $fit]);
+//                $response = Http::timeout($timeout)->post($url, ["fit" => $fit]);
+                $response = Http::timeout($timeout)->get($url, ["fit" => urlencode($fit)]);
 
                 if (!$response->ok()) {
                     throw new \RuntimeException("Response code is ", $response->status(). " body:".print_r($response->body()));
                 }
 
-                var_dump($response->json());
+                return $response->json();
             }
             catch (ConnectionException $exc) {
 	            Log::error("Could not connect to the worker at $url with $timeout seconds timeout");
