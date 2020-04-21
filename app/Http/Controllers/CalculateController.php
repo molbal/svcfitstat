@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\FitStatRequest;
 use App\Jobs\ProcessFitStat;
 use App\WorkerConnector\WorkerConnector;
 use Illuminate\Http\Request;
@@ -37,16 +36,22 @@ class CalculateController extends Controller
 
     }
 
+    /**
+     * Handles async calculation request
+     * @param Request $request
+     *
+     * @return array
+     */
     public function handleAsync(Request $request) {
 
         $fit = $request->get("fit");
-        $userId = $request->get("userId");
-        $fitStatRequest = (new FitStatRequest())
-            ->setEft($fit)
-            ->setUserId($userId)
-            ->setSync(false);
+        $userId = $request->get("appKey");
+        $appSecret = $request->get("appSecret");
 
-        ProcessFitStat::dispatch($fitStatRequest);
+
+        ProcessFitStat::dispatch([
+            'fit' => $fit
+        ]);
 
         return ['status' => true, 'message' => "Fit job dispatched."];
     }

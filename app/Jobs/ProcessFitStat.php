@@ -3,7 +3,6 @@
     namespace App\Jobs;
 
     use App\WorkerConnector\WorkerConnector;
-    use App\DTO\FitStatRequest;
     use Illuminate\Bus\Queueable;
     use Illuminate\Contracts\Queue\ShouldQueue;
     use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,39 +13,37 @@
     class ProcessFitStat implements ShouldQueue {
         use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-        /** @var FitStatRequest */
-        protected $fitStatRequest;
+        /** @var array */
+        protected $params;
 
         /**
-         * Create a new job instance.
+         * ProcessFitStat constructor.
          *
-         * @param FitStatRequest $fitStatRequest
+         * @param array $params
          */
-        public function __construct(FitStatRequest $fitStatRequest) {
-            $this->fitStatRequest = $fitStatRequest;
-    }
+        public function __construct(array $params) {
+            $this->params = $params;
+            echo "Constructing ProcessFitStat: ".print_r($params, 1);
+        }
+
 
         /**
          * Execute the job.
          *
+         * @param WorkerConnector $workerConnector
+         *
          * @return void
          */
-        public function handle() {
-            echo "1";
-            Log::info("1");
-            try {
-                echo "2";
-                Log::info("2");
-                /** @var WorkerConnector $worker */
-                $worker = resolve('App\WorkerConnector\WorkerConnector');
-                echo "3";
-                Log::info("3");
-                print_r($worker->calculateStats($this->fitStatRequest->eft));
+        public function handle(WorkerConnector $workerConnector) {
 
+            try {
+                $a =$workerConnector->calculateStats($this->params["fit"]);
+                Log::info(print_r($a, 1));
             }
             catch (\Exception $e) {
-                echo "Could not process job (".print_r($this->fitStatRequest)."):  $e \n";
-                Log::warning("Could not process job (".print_r($this->fitStatRequest)."): " . $e);
+                Log::warning("Could not process job (".print_r($this->params)."): " . $e);
+                $this->job->fail($e);
             }
         }
+
     }
