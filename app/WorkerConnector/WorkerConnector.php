@@ -11,28 +11,30 @@
 
     class WorkerConnector {
 
-
-
-        public function restartWorker() {
-
-            Log::info("Restarting container.");
-            $cmds = [];
-            // Stop
-            $cmds[] = "docker kill svcfitstat";
-
-            // Clean
-             $cmds[] = "docker rm svcfitstat";
-
-            // Start
-             $cmds[] = "docker run -p 8002:80 --name svcfitstat molbal/svcfitstat:0.9.2 &";
-
-            foreach ($cmds as $cmd) {
-                Log::debug("Executing $cmd -> ".shell_exec($cmd));
-             }
-        }
+//        /**
+//         * Restarts local worker
+//         */
+//        public function restartWorker() {
+//
+//            Log::info("Restarting container.");
+//            $cmds = [];
+//            // Stop
+//            $cmds[] = "docker kill svcfitstat";
+//
+//            // Clean
+//             $cmds[] = "docker rm svcfitstat";
+//
+//            // Start
+//             $cmds[] = "docker run -p 8002:80 --name svcfitstat molbal/svcfitstat:0.9.2 &";
+//
+//            foreach ($cmds as $cmd) {
+//                Log::debug("Executing $cmd -> ".shell_exec($cmd));
+//             }
+//        }
 
 
         /**
+         * Calls the docker worker
          * @param string $fit
          *
          * @return array
