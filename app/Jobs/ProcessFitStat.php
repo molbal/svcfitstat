@@ -13,6 +13,23 @@
     class ProcessFitStat implements ShouldQueue {
         use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+        /**
+         * The number of times the job may be attempted.
+         *
+         * @var int
+         */
+        public $tries = 3;
+
+        /**
+         * Determine the time at which the job should timeout.
+         *
+         * @return \DateTime
+         */
+        public function retryUntil()
+        {
+            return now()->addSeconds(15);
+        }
+
         /** @var array */
         protected $params;
 
@@ -35,9 +52,8 @@
          * @return void
          */
         public function handle(WorkerConnector $workerConnector) {
-
             try {
-                $a =$workerConnector->calculateStats($this->params["fit"]);
+                $a = $workerConnector->calculateStats($this->params["fit"]);
                 Log::info(print_r($a, 1));
             }
             catch (\Exception $e) {
