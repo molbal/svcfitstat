@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
 
+use Illuminate\Support\Facades\Schema;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
 //        Queue::before(function (JobProcessing $event) {
 //            // $event->connectionName
 //            // $event->job
