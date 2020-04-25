@@ -55,6 +55,20 @@
         }
 
         /**
+         * Gets the callback URL for
+         * @param string $appId
+         *
+         * @return mixed
+         */
+        public function getCallbackUrl(string $appId) {
+            return Cache::remember("sfs.callback.$appId", now()->addHour(), function () use ($appId) {
+               return DB::table("applications")
+                   ->where("APP_ID", $appId)
+                   ->value("CALLBACK_URL");
+            });
+        }
+
+        /**
          * Gets if a specified application exists. Result is cached for an hour.
          *
          * @param string $appId

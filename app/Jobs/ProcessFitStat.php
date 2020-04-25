@@ -53,8 +53,8 @@
          */
         public function handle(WorkerConnector $workerConnector) {
             try {
-                $a = $workerConnector->calculateStats($this->params["fit"]);
-                Log::info(print_r($a, 1));
+                $calc = $workerConnector->calculateStats($this->params["fit"]);
+                
             }
             catch (\Exception $e) {
                 Log::warning("Could not process job (".print_r($this->params)."): " . $e);
