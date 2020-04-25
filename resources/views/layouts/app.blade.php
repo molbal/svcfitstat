@@ -4,6 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/v1/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/v1/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/v1/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/v1/site.webmanifest">
+    <link rel="mask-icon" href="/favicon/v1/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/favicon/v1/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/favicon/v1/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -18,6 +30,32 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="css/app.css"/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap4-select2-theme@1.0.3/src/css/bootstrap4-select2-theme.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css"
+          integrity="sha256-BqW0zYSKgIYEpELUf5irBCGGR7wQd5VZ/N6OaBEsz5U=" crossorigin="anonymous"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"/>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css"
+          integrity="sha256-nbyata2PJRjImhByQzik2ot6gSHSU4Cqdz5bNYL2zcU=" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-html5-1.5.1/datatables.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+    <style>
+
+        @font-face {
+            font-family: 'Shentox 13';
+            src: url('fonts/Shentox-Regular2.woff2') format('woff2'),
+            url('fonts/Shentox-Regular2.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

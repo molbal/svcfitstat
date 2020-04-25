@@ -15,10 +15,24 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $parser = new Parsedown();
+    $readme = $parser->parse(file_get_contents(__DIR__."/../README.md"));
+    return view('readme', ['readme' => $readme]);
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+    /**
+     * Runs database migrations
+     */
+    Route::get("/maintenance/db/{secret}", function ($secret) {
+        if ($secret != env("MAINTENANCE_TOKEN")) {
+            abort(403, "Invalid maintenance token.");
+        }
+        echo "DB maintenance starts <br>";
+        echo Artisan::call('migrate', ['--force' => true]);
+        echo "DB maintenance Over";
+    });

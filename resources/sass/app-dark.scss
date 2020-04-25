@@ -1,9 +1,7 @@
 // Variables
 @import 'variables';
-
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
-
+@import "~@forevolve/bootstrap-dark/scss/bootstrap-dark";
 @import "layout";
 @import "customer";
 @import "button";
@@ -15,4 +13,4 @@
 @import "badge";
 
 @import "all_styles";
-@import "white_only";
+@import "dark_only";

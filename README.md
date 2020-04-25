@@ -1,5 +1,5 @@
 <p align="center">
-<img src="public/logo_giant.png" alt="logo" width="460">
+<img src="https://svcfitstat.eve-nt.uk/logo_giant.png" alt="logo" width="460">
 </p>
 
 # About this project
@@ -10,7 +10,7 @@ The service exposes a REST webservice that is - for now - used internally.
 
 # Architecture
 <p align="center">
-<img src="public/architecture.png" alt="logo" width="720">
+<img src="https://svcfitstat.eve-nt.uk/architecture.png" alt="logo" width="720">
 </p>
 
 The service consists of an exposed API and its components (this project), and a modified Pyfa running in a docker container.
@@ -19,7 +19,7 @@ The service consists of an exposed API and its components (this project), and a 
 This service was built with Laravel and handles communication, credentials check, and caching.
 
 ## Docker container
-<img src="https://img.icons8.com/dusk/64/000000/docker.png"/>
+<img src="https://img.icons8.com/dusk/64/000000/docker.png" width="64"/>
 
 The worker that actually runs the Pyfa is in a container due to its numerous dependencies: [Docker image](https://github.com/molbal/svcfitstat-worker)
 
