@@ -2,6 +2,7 @@
 
     namespace App\Jobs;
 
+    use App\Http\Controllers\CallbackController;
     use App\WorkerConnector\WorkerConnector;
     use Illuminate\Bus\Queueable;
     use Illuminate\Contracts\Queue\ShouldQueue;
@@ -51,10 +52,14 @@
          *
          * @return void
          */
-        public function handle(WorkerConnector $workerConnector) {
+        public function handle(WorkerConnector $workerConnector, CallbackController $callbackController) {
             try {
                 $calc = $workerConnector->calculateStats($this->params["fit"]);
-                
+                $callbackController->doCallback(
+                    $this->params["callback"],
+                    $this->params["externalId"],
+                    $this->params["appId"],
+                    $calc);
             }
             catch (\Exception $e) {
                 Log::warning("Could not process job (".print_r($this->params)."): " . $e);

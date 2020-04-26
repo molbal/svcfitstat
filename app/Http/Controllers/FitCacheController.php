@@ -6,6 +6,7 @@
 
 	use Illuminate\Support\Facades\Cache;
     use Illuminate\Support\Facades\DB;
+    use Illuminate\Support\Facades\Log;
 
     class FitCacheController {
 
@@ -19,8 +20,17 @@
          *
          * @return string Hash
          */
-        protected function getFitHash(string $fit): string {
-            return md5($fit); // Good enough here
+        public function getFitHash(string $fit): string {
+
+            // Just keep the ship name of the header, the fit's name is irrelevant
+            $lines = explode("\n", $fit);
+            $lines[0] = explode(",", explode("[", $lines[0],2)[1], 2)[0];
+            $fit = implode("\n", $lines);
+
+            // MD5 is good enough here
+            $md5 = md5($fit);
+
+            return $md5;
 	    }
 
         /**

@@ -21,6 +21,7 @@
      */
     class AppAuthController extends Controller {
 
+
         /**
          * Files the request under the given APP ID and APP SECRET
          *
@@ -47,6 +48,7 @@
                 throw $exception;
             } catch (QuotaLimitException $exception) {
                 Log::warning(sprintf("Quota limit reached/exceeded for APP_ID=[%s]", $appId));
+
                 throw $exception;
             } catch (\Exception $exception) {
                 Log::warning(sprintf("Unchecked exception with: APP_ID=[%s] APP_SECRET=[%s]", $appId, $appSecret));

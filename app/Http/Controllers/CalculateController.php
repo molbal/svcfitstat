@@ -4,9 +4,11 @@
 
     use App\Http\Controllers\Auth\AppAuthController;
     use App\Jobs\ProcessFitStat;
+    use App\Mail\ErrorMessage;
     use App\WorkerConnector\WorkerConnector;
     use http\Exception\RuntimeException;
     use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Mail;
 
     class CalculateController extends Controller {
 
@@ -16,17 +18,22 @@
         /** @var WorkerConnector */
         protected $worker;
 
+        /** @var CallbackController */
+        protected $callback;
 
         /**
          * CalculateController constructor.
          *
-         * @param AppAuthController $auth
-         * @param WorkerConnector   $worker
+         * @param AppAuthController  $auth
+         * @param WorkerConnector    $worker
+         * @param CallbackController $callback
          */
-        public function __construct(AppAuthController $auth, WorkerConnector $worker) {
+        public function __construct(AppAuthController $auth, WorkerConnector $worker, CallbackController $callback) {
             $this->auth = $auth;
             $this->worker = $worker;
+            $this->callback = $callback;
         }
+
 
         /**
          * Handles async calculation request
@@ -47,13 +54,29 @@
             }
 
             try {
+
                 $this->quickValidateEft($fit);
                 $this->auth->fileNewRequest($appId, $appSecret);
 
-                ProcessFitStat::dispatch(['fit' => $fit, 'id' => $fitId, 'callback' => $this->auth->getCallbackUrl($appId)]);
+                ProcessFitStat::dispatch([
+                    'fit' => $fit,
+                    'externalId' => $fitId,
+                    'appId' => $appId,
+                    'callback' => $this->auth->getCallbackUrl($appId)
+                ]);
                 return ['status' => true, 'message' => "Fit calculation job dispatched to the task queue."];
             }
             catch (\Exception $exc) {
+                if (get_class($exc) == 'App\Exceptions\QuotaLimitException') {
+                    $mail = $this->callback->getErrorEmail($appId);
+
+                    Mail::to($mail)->queue(
+                        new ErrorMessage(
+                            sprintf("Application %s quota was reached. It resets next month. Until then the fit calculation service is unable to process your requests.", $appId),
+                            sprintf("Application %s quota reached", $appId)
+                        )
+                    );
+                }
                 return ['status' => false, 'message' => $exc->getMessage(), 'dispute' => "If you think this was caused by an error on our end please open an issue in Github: https://github.com/molbal/svcfitstat/issues"];
             }
         }

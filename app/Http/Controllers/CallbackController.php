@@ -36,8 +36,9 @@
                 $this->notifyAppMaintainer($appId, $message, "Callback URL returned non 200 status code");
             }
             catch (\Exception $e) {
-                $message = "We ran into an unknown issue while callbacking:";
-                // TODO CONTINUE FROM HERE
+                $message = sprintf("We ran into an unchecked issue (%s) while calling $url:%s", get_class($e), $e->getMessage());
+                Log::warning("Sending error message: ".$message);
+                $this->notifyAppMaintainer($appId, $message, "Unknown error while sending response");
             }
 
         }
@@ -76,10 +77,9 @@
          *
          * @return string hashed app secret
          */
-        private function getErrorEmail(string $appId): string {
+        public function getErrorEmail(string $appId): string {
             return Cache::remember("sfs.notify.$appId", now()->addMinutes(15), function() use ($appId) {
                 return DB::table("applications")->where("NOTIFY_EMAIL", $appId)->value("APP_SECRET");
             });
-
         }
     }
