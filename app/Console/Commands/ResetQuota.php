@@ -14,14 +14,14 @@ class ResetQuota extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'sfs:reset_quota';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Resets quota. To be run monthly';
 
     /**
      * Create a new command instance.

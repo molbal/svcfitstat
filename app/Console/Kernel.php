@@ -32,7 +32,10 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping();
 
         $schedule->command('sfs:prune_cache')
-                ->daily();
+                 ->daily();
+
+        $schedule->command('sfs:reset_quota')
+                 ->monthly();
     }
 
     /**
