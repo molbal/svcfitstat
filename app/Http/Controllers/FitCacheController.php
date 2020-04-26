@@ -22,15 +22,23 @@
          */
         public function getFitHash(string $fit): string {
 
-            // Just keep the ship name of the header, the fit's name is irrelevant
+            // Get lines
             $lines = explode("\n", $fit);
-            $lines[0] = explode(",", explode("[", $lines[0],2)[1], 2)[0];
-            $fit = implode("\n", $lines);
+
+            // Get and strip the first line
+            $header = explode(",", explode("[", $lines[0],2)[1], 2)[0];
+
+            // Remove the header and then merge the rest of the items
+            array_shift($lines);
+
+            // Sort them to still cache same fits with different module orders
+            sort($lines);
+
+            // Make it back together into a string
+            $fit = $header.implode(";", $lines);
 
             // MD5 is good enough here
-            $md5 = md5($fit);
-
-            return $md5;
+            return md5($fit);
 	    }
 
         /**
@@ -71,6 +79,21 @@
                 case FitCacheController::MISS:
                     return null;
             }
+        }
+
+        /**
+         * Caches the fit
+         * @param string $fit
+         * @param        $value
+         */
+        public function putCache(string $fit, $value): void {
+	        $key = $this->getFitHash($fit);
+	        Cache::put(sprintf("sfs.short.%s", $key), now()->addHours(3), $value);
+            DB::table("long_term_cache")->insert([
+                'HASH' => $key,
+                "EXPIRE" => now()->addDays(10),
+                'VALUE' => $value
+            ]);
         }
 
         /**

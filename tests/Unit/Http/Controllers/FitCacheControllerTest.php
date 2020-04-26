@@ -22,12 +22,12 @@ Medium Shield Extender II
 5MN Y-T8 Compact Microwarpdrive
 Warp Disruptor II
 
+[Empty High slot]
+[Empty High slot]
 125mm Gatling AutoCannon II, Republic Fleet Phased Plasma S
-[Empty High slot]
-[Empty High slot]
 
-Small Anti-EM Screen Reinforcer I
 Small Anti-Thermal Screen Reinforcer I
+Small Anti-EM Screen Reinforcer I
 Small Anti-EM Screen Reinforcer I
 
 
@@ -81,8 +81,8 @@ Small Inductive Compact Remote Capacitor Transmitter
 [Empty Med slot]
 [Empty Med slot]
 
-Small Inductive Compact Remote Capacitor Transmitter
 [Empty High slot]
+Small Inductive Compact Remote Capacitor Transmitter
 [Empty High slot]
 
 [Empty Rig slot]

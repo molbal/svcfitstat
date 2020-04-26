@@ -47,7 +47,7 @@
             $fit = $request->get("fit");
             $appId = $request->get("appId");
             $appSecret = $request->get("appSecret");
-            $fitId = $request->get("fitId");
+            $fitId = $request->get("fitId") ?? "[not provided]";
 
             if (strlen(strval($fitId)) > 64) {
                 throw new \RuntimeException(sprintf("Fit ID must be 64 long, not %s, ya dummy", strlen(strval($fitId))));

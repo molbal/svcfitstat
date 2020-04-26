@@ -3,6 +3,7 @@
     namespace App\Jobs;
 
     use App\Http\Controllers\CallbackController;
+    use App\Http\Controllers\FitCacheController;
     use App\WorkerConnector\WorkerConnector;
     use Illuminate\Bus\Queueable;
     use Illuminate\Contracts\Queue\ShouldQueue;
@@ -48,18 +49,25 @@
         /**
          * Execute the job.
          *
-         * @param WorkerConnector $workerConnector
+         * @param WorkerConnector    $workerConnector
+         * @param CallbackController $callbackController
+         * @param FitCacheController $fitCacheController
          *
          * @return void
          */
-        public function handle(WorkerConnector $workerConnector, CallbackController $callbackController) {
+        public function handle(WorkerConnector $workerConnector, CallbackController $callbackController, FitCacheController $fitCacheController) {
             try {
-                $calc = $workerConnector->calculateStats($this->params["fit"]);
+                $fitValue = $fitCacheController->getCacheValue($this->params["fit"]);
+                if (!$fitValue) {
+                    $fitValue = $workerConnector->calculateStats($this->params["fit"]);
+                    $fitCacheController->putCache($this->params["fit"], $fitValue);
+                }
+
                 $callbackController->doCallback(
                     $this->params["callback"],
                     $this->params["externalId"],
                     $this->params["appId"],
-                    $calc);
+                    $fitValue);
             }
             catch (\Exception $e) {
                 Log::warning("Could not process job (".print_r($this->params)."): " . $e);
