@@ -30,6 +30,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('queue:work --daemon')
                  ->everyMinute()
                  ->withoutOverlapping();
+
+        $schedule->command('sfs:prune_cache')
+                ->daily();
     }
 
     /**
