@@ -59,6 +59,13 @@ The following form fields should be set:
 |`appSecret`|Your application secret|Yes|
 |`fitId`|An ID that will be passed back in the response.|No|
 
+For this request you will immediately receive a response whether it was added to the job queue, or not. The answer will be a JSON string, which will contain the following values:
+
+|Key|Type|Content|
+|---|---|---|
+|success|boolean|Whether the job dispatch succeeded|
+|message|string|If success is false, it contains the error message|
+
 ## Receive a response
 When setting up an URL the site will 
 

@@ -5,6 +5,7 @@
     use App\Http\Controllers\CallbackController;
     use App\Http\Controllers\FitCacheController;
     use App\WorkerConnector\WorkerConnector;
+    use Exception;
     use Illuminate\Bus\Queueable;
     use Illuminate\Contracts\Queue\ShouldQueue;
     use Illuminate\Foundation\Bus\Dispatchable;
@@ -42,10 +43,18 @@
          */
         public function __construct(array $params) {
             $this->params = $params;
-            echo "Constructing ProcessFitStat: ".print_r($params, 1);
         }
 
-
+        /**
+         * The job failed to process.
+         *
+         * @param  Exception  $exception
+         * @return void
+         */
+        public function failed(Exception $exception)
+        {
+            Log::error("Error in ProcessFitStat: ".get_class($exception). " ".$exception->getMessage(). "\n".$exception->getFile()."@".$exception->getLine());
+        }
         /**
          * Execute the job.
          *
@@ -56,18 +65,27 @@
          * @return void
          */
         public function handle(WorkerConnector $workerConnector, CallbackController $callbackController, FitCacheController $fitCacheController) {
+            Log::debug("Queue worker starting: ".print_r($this->params, 1));
             try {
+                Log::debug("TRACE 1");
                 $fitValue = $fitCacheController->getCacheValue($this->params["fit"]);
+                Log::debug("TRACE 2");
                 if (!$fitValue) {
+                    Log::debug("TRACE 3");
                     $fitValue = $workerConnector->calculateStats($this->params["fit"]);
+                    Log::debug("TRACE 4");
                     $fitCacheController->putCache($this->params["fit"], $fitValue);
+                    Log::debug("TRACE 5");
                 }
+                Log::debug("TRACE 6");
 
+                Log::debug("TRACE 7");
                 $callbackController->doCallback(
                     $this->params["callback"],
                     $this->params["externalId"],
                     $this->params["appId"],
                     $fitValue);
+                Log::debug("TRACE 8");
             }
             catch (\Exception $e) {
                 Log::warning("Could not process job (".print_r($this->params)."): " . $e);

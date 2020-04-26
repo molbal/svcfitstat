@@ -15,7 +15,7 @@ class CreateLongTermCache extends Migration
     {
         Schema::create('long_term_cache', function (Blueprint $table) {
             $table->string("HASH", 32)->primary();
-            $table->json("VALUE");
+            $table->mediumText("VALUE");
             $table->timestamp("EXPIRE")->index();
         });
     }

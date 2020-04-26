@@ -49,11 +49,19 @@
             $appSecret = $request->get("appSecret");
             $fitId = $request->get("fitId") ?? "[not provided]";
 
-            if (strlen(strval($fitId)) > 64) {
-                throw new \RuntimeException(sprintf("Fit ID must be 64 long, not %s, ya dummy", strlen(strval($fitId))));
-            }
 
             try {
+                if (!$fit) {
+                    throw new \RuntimeException("Fit value not set." );
+                }
+
+                if (!$appId ||!$appSecret) {
+                    throw new \RuntimeException("Please provide both appId and appSecret". print_r($request->all(), 1));
+                }
+
+                if (strlen(strval($fitId)) > 64) {
+                    throw new \RuntimeException(sprintf("Fit ID must be 64 long, not %s, ya dummy", strlen(strval($fitId))));
+                }
 
                 $this->quickValidateEft($fit);
                 $this->auth->fileNewRequest($appId, $appSecret);
@@ -64,7 +72,7 @@
                     'appId' => $appId,
                     'callback' => $this->auth->getCallbackUrl($appId)
                 ]);
-                return ['status' => true, 'message' => "Fit calculation job dispatched to the task queue."];
+                return ['success' => true, 'message' => "Fit calculation job dispatched to the task queue."];
             }
             catch (\Exception $exc) {
                 if (get_class($exc) == 'App\Exceptions\QuotaLimitException') {
@@ -77,7 +85,7 @@
                         )
                     );
                 }
-                return ['status' => false, 'message' => $exc->getMessage(), 'dispute' => "If you think this was caused by an error on our end please open an issue in Github: https://github.com/molbal/svcfitstat/issues"];
+                return ['success' => false, 'message' => $exc->getMessage(), 'dispute' => "If you think this was caused by an error on our end please open an issue in Github: https://github.com/molbal/svcfitstat/issues"];
             }
         }
 

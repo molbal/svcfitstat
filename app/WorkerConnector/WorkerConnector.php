@@ -29,10 +29,11 @@
                     'Content-Type' => 'application/x-www-form-urlencoded'
                 ])->post($url, [
                     "fit" => $fit,
-                    "secret" => env("SFS_WORKER_SECRET")]);
+                    "secret" => env("SFS_WORKER_SECRET")
+                ]);
 
                 if (!$response->ok()) {
-                    throw new \RuntimeException("Response code is ", $response->status(). " body:".print_r($response->body()));
+                    throw new \RuntimeException(sprintf("Response code is %d body: %s", $response->status(), print_r($response->body(), 1)));
                 }
 
                 $json = $response->json();

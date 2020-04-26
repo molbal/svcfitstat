@@ -36,3 +36,9 @@ Route::get('/home', 'HomeController@index')->name('home');
         echo Artisan::call('migrate', ['--force' => true]);
         echo "DB maintenance Over";
     });
+
+    Route::get("/maintenance/reset/{secret}", function ($secret) {
+        Artisan::call("config:clear");
+        Artisan::call("route:clear");
+        Artisan::call("queue:restart");
+    });
