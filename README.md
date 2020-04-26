@@ -67,7 +67,9 @@ For this request you will immediately receive a response whether it was added to
 |message|string|If success is false, it contains the error message|
 
 ## Receive a response
-When setting up an URL the site will 
+When setting up an URL the site will call that with a POST message.
+
+TBD
 
 
 ## Caching
@@ -83,6 +85,7 @@ using Redis, and for 10 days in the database.
 
 The database has 2 functions now: credentials and caching.
 
+TBD
 
 ## FAQ:
 ##### Does fit name count with caching?
