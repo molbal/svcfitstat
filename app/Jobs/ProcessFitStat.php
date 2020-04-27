@@ -88,8 +88,8 @@
                 Log::debug("TRACE 8");
             }
             catch (\Exception $e) {
-                Log::warning("Could not process job (".print_r($this->params)."): " . $e);
-                $this->job->fail($e);
+                Log::warning("Could not process job (".print_r($this->params, 1)."): " . $e);
+                $this->fail($e);
             }
         }
 

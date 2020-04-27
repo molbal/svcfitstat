@@ -22,15 +22,16 @@
 	    public function calculateStats(string $fit) {
             $url = env("SFS_WORKER_URL");
             $timeout = env("SFS_WORKER_TIMEOUT", 20);
-            Log::debug(sprintf("Calculating stats using %s (timeout  %d)", $url, $timeout));
+            $secret = env("SFS_WORKER_SECRET");
+            Log::debug(sprintf("Calculating stats using %s (timeout  %d, secret %s)", $url, $timeout, $secret));
 	        try {
                 $response = Http::timeout($timeout)->withHeaders([
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/x-www-form-urlencoded'
-                ])->post($url, [
-                    "fit" => $fit,
-                    "secret" => env("SFS_WORKER_SECRET")
-                ]);
+                ])->get($url, http_build_query([
+                    "fit" => urlencode($fit),
+                    "secret" => $secret
+                ]));
 
                 if (!$response->ok()) {
                     throw new \RuntimeException(sprintf("Response code is %d body: %s", $response->status(), print_r($response->body(), 1)));

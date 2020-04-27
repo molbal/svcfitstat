@@ -74,7 +74,7 @@
                 case FitCacheController::HIT_MEMORY:
                     return Cache::get(sprintf("sfs.short.%s", $key));
                 case FitCacheController::HIT_DB:
-                    return DB::table("long_term_cache")->where("HASH", $key)->value("VALUE");
+                    return json_decode(DB::table("long_term_cache")->where("HASH", $key)->value("VALUE"), true);
                 default:
                 case FitCacheController::MISS:
                     return null;
@@ -86,13 +86,13 @@
          * @param string $fit
          * @param        $value
          */
-        public function putCache(string $fit, $value): void {
+        public function putCache(string $fit, array $value): void {
 	        $key = $this->getFitHash($fit);
 	        Cache::put(sprintf("sfs.short.%s", $key), now()->addHours(3), $value);
             DB::table("long_term_cache")->insert([
                 'HASH' => $key,
                 "EXPIRE" => now()->addDays(10),
-                'VALUE' => $value
+                'VALUE' => json_encode($value)
             ]);
         }
 

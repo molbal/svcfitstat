@@ -14,4 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/calculate/async', 'CalculateController@handleAsync');
+    Route::post('/calculate/async', 'CalculateController@handleAsync');
+    Route::post('/calculate/sync', 'CalculateController@handleSync');
