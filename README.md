@@ -63,19 +63,56 @@ For this request you will immediately receive a response whether it was added to
 
 |Key|Type|Content|
 |---|---|---|
-|success|boolean|Whether the job dispatch succeeded|
-|message|string|If success is false, it contains the error message|
+|`success`|boolean|Whether the job dispatch succeeded|
+|`message`|string|If success is false, it contains the error message|
 
 ## Receive a response
 When setting up an URL the site will call that with a POST message.
 
-TBD
+The post message contains the following fields:
+
+|Field name|Description|
+|---|---|
+|`auth`|sha1 hash of the app secret|
+|`id`|The ID you entered in the `fitId` param of the initial request|
+|`result`|JSON encoded array ([Example response](CALLBACK_EXAMPLE.md))|
+
+### Example callback receiver function
+This snippet is from a Laravel api.php router file:
+
+```php
+Route::post("fit/callback", function (Request $request) {
+
+    // This is your app secret
+    $app_secret = env("FIT_SERVICE_APP_SECRET");
+
+    // This is the thing we will receive
+    $expectedAuth = sha1($app_secret);
+
+    // Valudate auth code
+    if ($request->get("auth") != $expectedAuth) {
+        return response(['error' => 'Invalid auth code provided.'], 403);
+    }
+
+    // Get the ID and the data
+    $id = $request->get("id");
+    $data = $request->get("result");
+
+    // Print into the log
+    Log::info(sprintf(
+            "Callback received for fit %s: \n%s",
+            $id,
+            print_r($data, 1)
+    ));
+});
+```
+
+Which prints the following to the log file: [Example](CALLBACK_EXAMPLE.md)
 
 
 ## Caching
 To the outside, caching is not transparent. But under the hood, we have 2 caching solutions working in parallel: After calculation, a fit is cached for 3 hours in memory, 
 using Redis, and for 10 days in the database.
-
 
 ## Database
 
@@ -83,9 +120,20 @@ using Redis, and for 10 days in the database.
 <img src="https://svcfitstat.eve-nt.uk/schema.png" alt="logo" width="600">
 </p>
 
-The database has 2 functions now: credentials and caching.
+The database has 2 functions now: credentials and caching. 
 
-TBD
+### DB Caching 
+Each entries return array is serialized into a json string, its EFT is made into a hash and then store in the `long_term_cache` table for 10 days.
+Every day a scheduled task runs to delete expired log entries.
+
+### Authorization and quota enforcement
+Applications are tied to users, but this is not used in any way now. 
+Applications have an APP_ID and an APP_SECRET, which are - for now - stored as clear text (I know I know) in the database. 
+This is where the callback URL is also stored along with the monthly quota.
+
+After validating incoming requests a row is inserted into the `rolling` table. 
+Each month a scheduled task empties the monthly table thus resets the quota. When it runs it inserts a row into the `history` table. 
+
 
 ## FAQ:
 ##### Does fit name count with caching?

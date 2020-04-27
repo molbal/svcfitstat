@@ -8,6 +8,7 @@
     use App\WorkerConnector\WorkerConnector;
     use http\Exception\RuntimeException;
     use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Log;
     use Illuminate\Support\Facades\Mail;
 
     class CalculateController extends Controller {
@@ -146,7 +147,7 @@
             }
 
             if (strlen(strval($fitId)) > 64) {
-                throw new \RuntimeException(sprintf("Fit ID must be 64 long, not %s, ya dummy", strlen(strval($fitId))));
+                throw new \RuntimeException(sprintf("Fit ID must be max 64 chars long, not %s, ya dummy", strlen(strval($fitId))));
             }
 
             $this->quickValidateEft($fit);
@@ -157,7 +158,9 @@
          */
         private function sendErrorEmail($appId) : void {
             $mail = $this->callback->getErrorEmail($appId);
+            Log::info(sprintf("Queuing error mail to %s", $mail));
             Mail::to($mail)
-                ->queue(new ErrorMessage(sprintf("Application %s quota was reached. It resets next month. Until then the fit calculation service is unable to process your requests.", $appId), sprintf("Application %s quota reached", $appId)));
+                ->queue(
+                    new ErrorMessage(sprintf("Application %s quota was reached. It resets next month. Until then the fit calculation service is unable to process your requests.", $appId), sprintf("Application %s quota reached", $appId)));
         }
     }

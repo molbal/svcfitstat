@@ -14,11 +14,23 @@
 |
 */
 
-Route::get('/', function () {
-    $parser = new Parsedown();
-    $readme = $parser->parse(file_get_contents(__DIR__."/../README.md"));
-    return view('readme', ['readme' => $readme]);
-});
+    Route::get('/', function () {
+        $parser = new Parsedown();
+        $readme = $parser->parse(file_get_contents(__DIR__."/../README.md"));
+        return view('readme', ['readme' => $readme]);
+    });
+
+    Route::get('/{file?}', function (string $file = "README.md") {
+        if (!file_exists(__DIR__."/../$file")) {
+            return redirect('/');
+        }
+        if (stripos($file, '/') !== false) {
+            return redirect('/');
+        }
+        $parser = new Parsedown();
+        $readme = $parser->parse(file_get_contents(__DIR__."/../$file"));
+        return view('readme', ['readme' => $readme]);
+    });
 
 Auth::routes();
 
@@ -38,7 +50,20 @@ Route::get('/home', 'HomeController@index')->name('home');
     });
 
     Route::get("/maintenance/reset/{secret}", function ($secret) {
+        if ($secret != env("MAINTENANCE_TOKEN")) {
+            abort(403, "Invalid maintenance token.");
+        }
+        echo "config:clear start<br/>";
         Artisan::call("config:clear");
+        echo "config:clear stop<br/>";
+        echo "route:clear start<br/>";
         Artisan::call("route:clear");
+        echo "route:clear stop<br/>";
+        echo "queue:restart start<br/>";
         Artisan::call("queue:restart");
+        echo "queue:restart stop<br/>";
+        echo "cache:clear start<br/>";
+        Artisan::call("cache:clear");
+        echo "cache:clear stop<br/>";
+
     });

@@ -40,6 +40,6 @@ class ErrorMessage extends Mailable
     {
         return $this->markdown('emails.error', ["message" => $this->text])
             ->subject($this->subject)
-            ->from(env("APP_NAME"));
+            ->from(env("MAIL_FROM_ADDRESS"));
     }
 }

@@ -1,7 +1,7 @@
-POST http://127.0.0.1:8000/api/calculate/sync?yo
+POST https://svcfitstat.eve-nt.uk/api/calculate/sync
 Accept: application/json
 Content-Type: application/x-www-form-urlencoded
 
-fit=[Nergal%2C+Nergsdfasdfl+fit]%0A%0ASmall+Armor+Repairer+II%0AAssault+Damage+Control+II%0AAdaptive+Nano+Plating+II%0AAdaptive+Nano+Plating+II%0A%0ASmall+Hull+Repairer+II%0ASmall+Shield+Booster+I%0ASmall+Compact+Pb-Acid+Cap+Battery%0A%0ALight+Entropic+Disintegrator+I%2C+Tetryon+Exotic+Plasma+S%0A[Empty+High+slot]%0A%0ASmall+Anti-Kinetic+Pump+I%0ASmall+Anti-Kinetic+Pump+I%0A%0AHobgoblin+II+x5
+appId=ABYSS_TRACKER&appSecret=xTLV0orfYsIrFoRtTGDD&fit=[Nergal%2C+Nergsdfasdfl+fit]%0A%0ASmall+Armor+Repairer+II%0AAssault+Damage+Control+II%0AAdaptive+Nano+Plating+II%0AAdaptive+Nano+Plating+II%0A%0ASmall+Hull+Repairer+II%0ASmall+Shield+Booster+I%0ASmall+Compact+Pb-Acid+Cap+Battery%0A%0ALight+Entropic+Disintegrator+I%2C+Tetryon+Exotic+Plasma+S%0A[Empty+High+slot]%0A%0ASmall+Anti-Kinetic+Pump+I%0ASmall+Anti-Kinetic+Pump+I%0A%0AHobgoblin+II+x5&externalId=1
 
 ###
