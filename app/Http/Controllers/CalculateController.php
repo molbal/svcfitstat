@@ -88,7 +88,7 @@
             }
             catch (\Exception $exc) {
                 if (get_class($exc) == 'App\Exceptions\QuotaLimitException') {$this->sendErrorEmail($appId);                }
-                return ['success' => false, 'message' => $exc->getMessage(), 'dispute' => "If you think this was caused by an error on our end please open an issue in Github: https://github.com/molbal/svcfitstat/issues"];
+                return ['success' => false, 'message' => $exc->getMessage(), 'dispute' => "If you think this was caused by an error on our end please open an issue in Github: https://github.com/molbal/svcfitstat/issues", 'error_line' => $exc->getLine(), 'error_file' => $exc->getFile()];
             }
         }
 
@@ -104,7 +104,9 @@
             }
 
             $lines = explode("\n", $fit);
-            $regex_header = '/^\[.+\,.+\]$/im';
+            $regex_header = '/^\\[.+\\,.+\\]$/im';
+
+            $lines[0] = '[Gila, Gila T4 ABYXss Electric]';
             if (!preg_match($regex_header, $lines[0])) {
                 throw new \RuntimeException(sprintf("The given fit's first line does not seem to be a valid EFT header. First line: <%s>. Checked using regex %s", $lines[0], $regex_header));
             }
