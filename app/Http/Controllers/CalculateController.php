@@ -106,9 +106,16 @@
             $lines = explode("\n", $fit);
             $regex_header = '/^\\[.+\\,.+\\]$/im';
 
-            $lines[0] = '[Gila, Gila T4 ABYXss Electric]';
-            if (!preg_match($regex_header, $lines[0])) {
-                throw new \RuntimeException(sprintf("The given fit's first line does not seem to be a valid EFT header. First line: <%s>. Checked using regex %s", $lines[0], $regex_header));
+//            $lines[0] = '[Gila, Gila T4 ABYXss Electric]';
+            $line = trim($lines[0]);
+            if ($line[0] !== '[') {
+                throw new \RuntimeException(sprintf("The first character of the first line should be '[', not '%s'", $line[0]));
+            }
+            if ($line[strlen($line)-1] !== ']') {
+                throw new \RuntimeException(sprintf("The last character of the first line should be ']', not '%s'", $line[strlen($line)-1]));
+            }
+            if (stripos($line, ',') === false) {
+                throw new \RuntimeException(sprintf("The first line (%s) should contain a comma", $line));
             }
 
             if (count($lines) < 3) {
