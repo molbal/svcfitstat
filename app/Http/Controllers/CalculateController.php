@@ -56,7 +56,7 @@
                     'appId' => $appId,
                     'callback' => $this->auth->getCallbackUrl($appId)
                 ]);
-                return ['success' => true, 'message' => "Fit calculation job dispatched to the task queue."];
+                return ['success' => true, 'message' => "Fit calculation job dispatched to the task queue.", 'fit' => $fit,'id' => $fitId, 'expect_callback' => $this->auth->getCallbackUrl($appId)];
             }
             catch (\Exception $exc) {
                 if (get_class($exc) == 'App\Exceptions\QuotaLimitException') {$this->sendErrorEmail($appId);                }
@@ -84,7 +84,7 @@
                     'appId' => $appId,
                     'callback' => $this->auth->getCallbackUrl($appId)
                 ]);
-                return ['success' => true, 'message' => "Fit calculation job dispatched to the task queue."];
+                return ['success' => true, 'message' => "Fit calculation job dispatched to the task queue.", 'fit' => $fit,'id' => $fitId, 'expect_callback' => $this->auth->getCallbackUrl($appId)];
             }
             catch (\Exception $exc) {
                 if (get_class($exc) == 'App\Exceptions\QuotaLimitException') {$this->sendErrorEmail($appId);                }

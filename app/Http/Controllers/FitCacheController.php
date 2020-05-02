@@ -32,7 +32,7 @@
             array_shift($lines);
 
             // Sort them to still cache same fits with different module orders
-            sort($lines);
+//            sort($lines);
 
             // Make it back together into a string
             $fit = $header.implode(";", $lines);

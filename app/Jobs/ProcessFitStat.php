@@ -21,7 +21,12 @@
          *
          * @var int
          */
-        public $tries = 3;
+        public $tries = 2;
+
+        public function retryAfter() {
+            return now()->addSeconds(1800);
+
+        }
 
         /**
          * Determine the time at which the job should timeout.
@@ -30,7 +35,7 @@
          */
         public function retryUntil()
         {
-            return now()->addSeconds(15);
+            return now()->addSeconds(1800);
         }
 
         /** @var array */
@@ -42,6 +47,7 @@
          * @param array $params
          */
         public function __construct(array $params) {
+            Log::info("Constructing job: ".print_r($params ,1));
             $this->params = $params;
         }
 

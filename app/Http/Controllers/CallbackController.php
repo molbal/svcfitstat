@@ -16,6 +16,7 @@
     class CallbackController {
 
         public function doCallback(string $url, string $externalId, string $appId, $data) : void {
+            Log::info(sprintf("Callback to %s with ID %s", $url, $externalId));
             try {
                 $r = Http::timeout(10)
                     ->asForm()

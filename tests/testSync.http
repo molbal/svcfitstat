@@ -1,7 +1,7 @@
-POST https://svcfitstat.eve-nt.uk/api/calculate/sync
+POST https://svcfitstat.eve-nt.uk/api/calculate/async
 Accept: application/json
 Content-Type: application/x-www-form-urlencoded
 
-appId=ABYSS_TRACKER&appSecret=xTLV0orfYsIrFoRtTGDD&fit=[Nergal%2C+Nergsdfasdfl+fit]%0A%0ASmall+Armor+Repairer+II%0AAssault+Damage+Control+II%0AAdaptive+Nano+Plating+II%0AAdaptive+Nano+Plating+II%0A%0ASmall+Hull+Repairer+II%0ASmall+Shield+Booster+I%0ASmall+Compact+Pb-Acid+Cap+Battery%0A%0ALight+Entropic+Disintegrator+I%2C+Tetryon+Exotic+Plasma+S%0A[Empty+High+slot]%0A%0ASmall+Anti-Kinetic+Pump+I%0ASmall+Anti-Kinetic+Pump+I%0A%0AHobgoblin+II+x5&externalId=1
+appId=ABYSS_TRACKER&appSecret=xTLV0orfYsIrFoRtTGDD&fit=%5BGila%2C%20Gila%20T4%20ABYXss%20Electric%5D%0A%0ACaldari%20Navy%20Power%20Diagnostic%20System%0ADrone%20Damage%20Amplifier%20II%0ADrone%20Damage%20Amplifier%20II%0A%0AAdaptive%20Invulnerability%20Shield%20Hardener%20II%0AAdaptive%20Invulnerability%20Shield%20Hardener%20II%0AFederation%20Navy%2010MN%20Afterburner%0ACaldari%20Navy%20Large%20Shield%20Extender%0ACaldari%20Navy%20Large%20Shield%20Extender%0ACaldari%20Navy%20Large%20Shield%20Extender%0A%0ARapid%20Light%20Missile%20Launcher%20II%2C%20Caldari%20Navy%20Scourge%20Light%20Missile%0ARapid%20Light%20Missile%20Launcher%20II%2C%20Caldari%20Navy%20Scourge%20Light%20Missile%0ARapid%20Light%20Missile%20Launcher%20II%2C%20Caldari%20Navy%20Scourge%20Light%20Missile%0ARapid%20Light%20Missile%20Launcher%20II%2C%20Caldari%20Navy%20Scourge%20Light%20Missile%0AMedium%20Ghoul%20Compact%20Energy%20Nosferatu%0A%0AMedium%20Core%20Defense%20Field%20Purger%20II%0AMedium%20Core%20Defense%20Field%20Purger%20II%0AMedium%20Core%20Defense%20Field%20Purger%20II%0A%0A%0AVespa%20II%20x2%0ACaldari%20Navy%20Vespa%20x5%0AVespa%20II%20x3%0A&fitId=27
 
 ###
