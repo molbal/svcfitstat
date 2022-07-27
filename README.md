@@ -31,7 +31,7 @@ A fork of Pyfa modified a substantially to accept a fit as a command line parame
  
 ### AWS Simple Queue Service
 Incoming calculation requests are dispatched into a queue where a service worker runs Pyfa to calculate. Due to the time consuming nature of this service, it would be unwise to keep 
-so many threads open, when a fit calculation result can come minutes later. So to combat this, we are using a ***solicit/response*** type of communication, which, in this 
+so many threads open, when a fit calculation result can come minutes later. So to combat this, we are using an async ***request/response*** type of communication, which, in this 
 implementation simply means that your application will send in a request via a POST request, and when the worker processed your request, the API will call an endpoint you provide 
 to return the fit stats.
 
