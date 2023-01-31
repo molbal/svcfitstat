@@ -1,6 +1,18 @@
-<p align="center">
-<img src="https://svcfitstat.eve-nt.uk/logo_giant.png" alt="logo" width="460">
-</p>
+## Discontinuation notice
+
+Dear Capsuleers,
+
+It is with regret that I write to inform you that the pyfa-cli and svcfitstat projects are being discontinued. The reason for this decision is the transfer of the related Abyss Tracker project to EVE Workbench.
+
+It has been an honor and a privilege to work on this project and I would like to express my sincere gratitude to all of you who have used and supported svcfitstat. Your feedback and contributions have been invaluable and have helped shape the project into what it is today.
+
+Although this marks the end of this project, I am confident that the move of the Abyss Tracker to EVE Workbench will lead to even greater success and advancements in the future. I encourage you to continue to follow the developments on EVE Workbench and support the ongoing efforts of the new maintainers.
+
+Thank you again for your support and understanding.
+
+Fly safe,
+
+Veetor
 
 ## About this project
 
